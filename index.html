@@ -38,21 +38,23 @@ body {
   align-items: center;
   z-index: 1000;
 
-  background: transparent;   /* PENTING */
+  background: transparent;
   box-shadow: none;
   transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
 .navbar.scrolled {
   background: var(--primary);
-  box-shadow: 0 4px 14px #f8f9ff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
 }
 
-.navbar a {
+.nav-title {
   color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  font-weight: 500;
+  font-weight: 700;
+}
+
+.nav-menu a {
+  color: white;
 }
 
 
@@ -339,6 +341,19 @@ iframe { width: 100%; height: calc(100vh - 70px); border: none; }
   box-shadow: none;              /* HILANG SHADOW */
 }
 
+/* menu navbar */
+.nav-menu {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-menu a {
+  position: relative;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
 /* garis bawah hover */
 .nav-menu a::after {
   content: "";
@@ -354,7 +369,6 @@ iframe { width: 100%; height: calc(100vh - 70px); border: none; }
 .nav-menu a:hover::after {
   width: 100%;
 }
-
 
 .footer {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -437,20 +451,7 @@ iframe { width: 100%; height: calc(100vh - 70px); border: none; }
   font-size: 20px;
   font-weight: 700;
 }
-.navbar {
-  transition: background 0.4s ease, box-shadow 0.4s ease;
-}
 
-.nav-title {
-  transition: color 0.4s ease;
-}
-
-.navbar.scrolled .nav-title {
-  color: #f3f5fb; 
-}
-
-<style>
-/* --- Semua CSS lama di sini --- */
 
 /* ================= MEDIA QUERY HP ================= */
 @media (max-width: 768px) {
@@ -476,8 +477,6 @@ iframe { width: 100%; height: calc(100vh - 70px); border: none; }
     <a href="#metodologi">Metodologi</a>
     <a href="#map-section">Peta</a>
   </div>
-</div>
-
 </div>
 
 <section class="hero" id="home">
@@ -672,12 +671,6 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<script>
-window.addEventListener("scroll", function () {
-  const navbar = document.querySelector(".navbar");
-  navbar.classList.toggle("scrolled", window.scrollY > 50);
-});
-</script>
 <script>
 window.addEventListener("scroll", () => {
   const navbar = document.querySelector(".navbar");
