@@ -4,38 +4,27 @@
 <meta charset="UTF-8">
 <title>Web Map Wisata Pulau Bali</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --primary: #1a237e;
-  --secondary: #3949ab;
+  --primary: #232759;
+  --secondary: #3b426e;
   --accent: #ffca28;
+  --bg-soft: #f3f5fb;
+  --card-hover: #eef1ff;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   scroll-behavior: smooth;
   background: #fafafa;
 }
-
-
-
-.highlight-paragraph {
-  background: rgba(238, 231, 231, 0.45);
-  padding: 14px 22px;
-  border-radius: 10px;
-  display: inline-block;
-  max-width: 800px;
-  line-height: 1.6;
-  backdrop-filter: blur(4px);
-}
-
-
 
 /* ================= NAVBAR ================= */
 .navbar {
@@ -43,14 +32,20 @@ body {
   top: 0;
   width: 100%;
   height: 70px;
-  background: var(--primary);
-  color: white;
+  padding: 0 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+
+  background: transparent;   /* PENTING */
+  box-shadow: none;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: var(--primary);
+  box-shadow: 0 4px 14px #f8f9ff;
 }
 
 .navbar a {
@@ -60,35 +55,23 @@ body {
   font-weight: 500;
 }
 
-.navbar a:hover {
-  text-decoration: underline;
-}
 
 /* ================= HERO ================= */
 .hero {
   position: relative;
   height: 100vh;
-  padding-top: 70px;
-  color: #1a237e;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
   overflow: hidden;
 }
 
-/* SLIDER */
+/* SLIDER BACKGROUND */
 .slider {
   position: absolute;
-  top: 70px;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 70px);
-  overflow: hidden;
-  z-index: 0;
+  inset: 0;
+  z-index: 0; /* PENTING: jangan negatif */
 }
 
 .slide {
@@ -102,24 +85,37 @@ body {
 }
 
 .slide.active {
-  opacity: 0.35;
+  opacity: 1;
 }
 
-/* HERO CONTENT */
+/* OVERLAY */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.55)
+  );
+  z-index: 1;
+}
+
+
+
+/* CONTENT */
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 900px;
 }
 
 .hero h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
+  font-size: 50px;
+  color: #ffca28;
 }
 
 .hero p {
-  font-size: 18px;
-  opacity: 0.95;
+  font-size: px;
 }
 
 .hero a {
@@ -131,133 +127,554 @@ body {
   font-weight: bold;
   border-radius: 8px;
   text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.hero a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-/* ================= INFO ================= */
-.filter-info {
-  background: #ffffff;
-  padding: 20px;
+.hero-content {
+  color: white;
   text-align: center;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  max-width: 900px;
+  padding: 20px;
 }
 
-.filter-info h3 {
-  margin-bottom: 10px;
+.hero-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
 }
 
-.filter-info p {
-  max-width: 800px;
+
+.hero-title span {
+  color: var(--accent);
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  margin: 22px auto 34px;
+  max-width: 720px;
+  line-height: 1.7;
+  color: #e0e0e0;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(255,202,40,0.15);
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: black;
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+
+/* ================= SECTION ================= */
+.section {
+  padding: 90px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #ffffff, var(--bg-soft));
+}
+
+.section h2 { color: var(--primary); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
   margin: auto;
-  color: #555;
+}
+
+.card {
+  background: white;
+  padding: 26px 22px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  background: var(--card-hover);
 }
 
 /* ================= MAP ================= */
-#map-section {
-  height: 100vh;
-  padding-top: 70px;
-  background: #eaeaea;
-}
-
-iframe {
-  width: 100%;
-  height: calc(100vh - 70px);
-  border: none;
-}
+#map-section { height: 100vh; padding-top: 70px; }
+iframe { width: 100%; height: calc(100vh - 70px); border: none; }
 
 /* ================= FOOTER ================= */
 .footer {
   background: var(--primary);
   color: white;
   text-align: center;
-  padding: 15px;
-  font-size: 14px;
+  padding: 10px 20px;
+  font-size: 12px;
 }
+.scroll-indicator{
+  position:absolute;
+  bottom:20px;
+  font-size:12px;
+  color:#1a237e;
+  animation:bounce 1.5s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(8px)}
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:24px;
+  max-width:900px;
+  margin:40px auto 0;
+}
+.stat-box{
+  background:white;
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 10px 26px rgba(0,0,0,0.08);
+}
+.stat-number{
+  font-size:36px;
+  font-weight:700;
+  color:var(--secondary);
+}
+.stat-label{color:#555}
+
+.insight{
+  background:linear-gradient(135deg,var(--secondary),var(--primary));
+  color:white;
+  border-radius:20px;
+  padding:40px 30px;
+  max-width:900px;
+  margin:60px auto 0;
+}
+.insight h3{margin-top:0}
+.tentang{
+  background:
+    linear-gradient(135deg,rgba(26,35,126,0.85),rgba(57,73,171,0.85)),
+    url('Assets/img/bali 4.jpg') center/cover no-repeat;
+  color:white;
+}
+
+.tentang h2{color:#ffeb3b}
+.tentang p{color:#f5f5f5}
+
+/* ===== HERO TEXT ANIMATION ===== */
+.reveal h1,
+.reveal p,
+.reveal a {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.4s; }
+.delay-2 { animation-delay: 0.8s; }
+.delay-3 { animation-delay: 1.2s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal > * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.3s; }
+.delay-2 { animation-delay: 0.6s; }
+.delay-3 { animation-delay: 0.9s; }
+.delay-4 { animation-delay: 1.2s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== SOLID HEADER ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  padding: 0 40px;
+  background: none;              /* HILANG BG */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: none;              /* HILANG SHADOW */
+}
+
+/* garis bawah hover */
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+  width: 100%;
+}
+
+
+.footer {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #e0e0e0;
+  padding: 15x 15px 10px; /* 🔽 dari 50px */
+  text-align: center;
+}
+
+.footer h3 {
+  font-size: 18px; /* 🔽 dari 22px */
+}
+
+.footer p {
+  font-size: 13px; /* 🔽 dari 14px */
+  margin: 8px auto 14px; /* 🔽 jarak */
+  line-height: 1.5;
+}
+
+.footer-divider {
+  width: 60px; /* 🔽 dari 80px */
+  height: 2px; /* 🔽 dari 3px */
+  margin: 14px auto;
+}
+
+.footer small {
+  font-size: 12px; /* 🔽 dari 13px */
+}
+
+/* ===== METODOLOGI SECTION ===== */
+.metodologi {
+  background: linear-gradient(180deg, #f8f9ff, #eef1ff);
+}
+
+.method-desc {
+  max-width: 800px;
+  margin: 20px auto 50px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 26px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.method-card {
+  background: white;
+  padding: 30px 26px;
+  border-radius: 20px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.method-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+}
+
+.method-icon {
+  font-size: 38px;
+  margin-bottom: 14px;
+}
+
+.method-card h3 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.method-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+.nav-title {
+  color: #f3f5fb; 
+  font-size: 20px;
+  font-weight: 700;
+}
+.navbar {
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav-title {
+  transition: color 0.4s ease;
+}
+
+.navbar.scrolled .nav-title {
+  color: #f3f5fb; 
+}
+
 </style>
+
 </head>
-
 <body>
-
-<!-- NAVBAR -->
 <div class="navbar">
-  <div><b>🌍 Web Map Wisata Bali</b></div>
-  <div>
+  <div class="nav-title"> Web Map Wisata Pulau Bali</div>
+  <div class="nav-menu">
     <a href="#home">Beranda</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#metodologi">Metodologi</a>
     <a href="#map-section">Peta</a>
   </div>
 </div>
 
-<!-- HERO -->
-<section class="hero" id="home">
-
-  <!-- SLIDER -->
-  <div class="slider">
-  <img src="Assets/img/bali 1.jpg" class="slide active" alt="Bali 1">
-  <img src="Assets/img/bali 2.jpg" class="slide" alt="Bali 2">
-  <img src="Assets/img/bali 3.jpg" class="slide" alt="Bali 3">
-  <img src="Assets/img/bali 4.jpg" class="slide" alt="Bali 4">
 </div>
- <!-- SLIDER -->
 
-
-
-  <!-- HERO CONTENT -->
-  <div class="hero-content">
-   <h1>
-  <span class="highlight">Peta Persebaran Objek Wisata </span>
-</h1>
-
-   <p class="highlight-paragraph">
-  Visualisasi persebaran objek wisata di Pulau Bali berdasarkan
-  kelas rating dan jenis wisata menggunakan Web GIS interaktif.
-</p>
-
-
-    <a href="#map-section">🗺️ Lihat Peta</a>
+<section class="hero" id="home">
+  <div class="slider">
+    <img src="Assets/img/bali 1.jpg" class="slide active">
+    <img src="Assets/img/bali 2.jpg" class="slide">
+    <img src="Assets/img/bali 3.jpg" class="slide">
   </div>
+
+ <div class="hero-content reveal">
+  <span class="hero-badge delay-1">SELAMAT DATANG</span>
+
+  <h1 class="hero-title delay-2">
+    Web Map Wisata <br>
+    <span>Pulau Bali</span>
+  </h1>
+
+  <p class="hero-subtitle delay-3">
+    Visualisasi spasial interaktif untuk memahami persebaran
+    objek wisata berdasarkan jenis dan rating di Pulau Bali
+  </p>
+
+  <div class="hero-buttons delay-4">
+    <a href="#map-section" class="btn-primary">🗺️ Jelajahi Peta</a>
+    <a href="#tentang" class="btn-outline">📖 Tentang Peta</a>
+  </div>
+</div>
+
+<div class="scroll-indicator">⬇ Scroll untuk eksplor</div>
+</section>
+
+<section class="section tentang" id="tentang">
+  <h2>📌 Tentang Peta</h2>
+  <p style="max-width:820px;margin:auto;line-height:1.7;">
+    Peta ini dikembangkan sebagai media visualisasi spasial objek wisata di Pulau Bali berbasis <b>Web GIS</b>.
+    Visualisasi interaktif ini memudahkan pengguna dalam memahami pola sebaran, karakteristik, serta potensi
+    pengembangan pariwisata berdasarkan data spasial.
+  </p>
+</section>
+
+<section class="section" style="background:#fff;">
+  <h2>📊 Sekilas Data</h2>
+  <div class="cards">
+    <div class="card"><h3>🏝️ Objek Wisata</h3><p>Berbagai kategori wisata alam, budaya, dan buatan</p></div>
+    <div class="card"><h3>⭐ Kelas Rating</h3><p>Pengelompokan berdasarkan tingkat popularitas</p></div>
+    <div class="card"><h3>🗺️ Data Spasial</h3><p>Koordinat geografis berbasis OpenStreetMap</p></div>
+    <div class="card"><h3>⚙️ Web GIS</h3><p>Dikembangkan dengan Python & Folium</p></div>
+  </div>
+
+  <div class="stats">
+  <div class="stat-box">
+    <div class="stat-number" data-target="100">0</div>
+    <div class="stat-label">Objek Wisata</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number" data-target="4">0</div>
+    <div class="stat-label">Kategori Wisata</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number" data-target="5">0</div>
+    <div class="stat-label">Kelas Rating</div>
+  </div>
+</div>
 
 </section>
 
-<!-- INFO -->
-<div class="filter-info">
-  <h3>🧭 Petunjuk Penggunaan</h3>
-  <p>
-    Gunakan <b>checkbox filter</b> di dalam peta untuk menampilkan
-    objek wisata berdasarkan <b>tipe wisata</b>.
-  </p>
-  <p>Klik marker untuk melihat informasi detail.</p>
-</div>
+<section class="section">
+  <h2>🎯 Mengapa Peta Ini Penting?</h2>
+  <p>Peta ini tidak hanya menampilkan lokasi wisata, tetapi juga membantu memahami pola spasial dan karakteristik pariwisata di Bali.</p>
+  <div class="cards">
+    <div class="card">📍<b>Analisis Persebaran</b><br>Memahami konsentrasi dan sebaran objek wisata di setiap wilayah.</div>
+    <div class="card">⭐<b>Kualitas & Popularitas</b><br>Melihat kecenderungan rating wisata pada tiap jenis dan lokasi.</div>
+    <div class="card">🗺️<b>Dukungan Analisis Spasial</b><br>Media pendukung kajian pariwisata berbasis SIG/Web GIS.</div>
+    <div class="card">📊<b>Perencanaan & Evaluasi</b><br>Referensi awal untuk perencanaan pengembangan pariwisata daerah.</div>
+  </div>
+  <div class="insight">
+    <h3>📌 Insight Spasial Awal</h3>
+    <p>Objek wisata dengan rating tinggi cenderung terkonsentrasi di wilayah Bali Selatan,
+    sementara wisata alam lebih banyak tersebar di Bali Tengah dan Utara.</p>
+  </div>
+</section>
 
-<!-- MAP -->
+<section class="section metodologi" id="metodologi">
+  <h2>🧪 Metodologi Pengembangan Peta</h2>
+
+  <p class="method-desc">
+    Peta persebaran objek wisata Pulau Bali dikembangkan menggunakan pendekatan
+    <b>Sistem Informasi Geografis (SIG) berbasis Web</b> untuk menyajikan informasi
+    spasial secara interaktif dan informatif.
+  </p>
+
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-icon">📥</div>
+      <h3>Pengumpulan Data</h3>
+      <p>
+        Data objek wisata diperoleh dari sumber terbuka seperti
+        Kaggle yang mencakup lokasi, jenis wisata,
+        dan rating.
+      </p>
+    </div>
+
+    <div class="method-card">
+      <div class="method-icon">🗂️</div>
+      <h3>Pengolahan Data</h3>
+      <p>
+        Data diklasifikasikan berdasarkan kategori wisata dan kelas rating
+        menggunakan algoritma unspervised k-means
+        untuk mendukung analisis pola persebaran spasial.
+      </p>
+    </div>
+
+    <div class="method-card">
+      <div class="method-icon">🗺️</div>
+      <h3>Visualisasi Peta</h3>
+      <p>
+        Visualisasi dilakukan menggunakan Python dengan pustaka Folium
+        untuk menghasilkan peta interaktif berbasis Web GIS.
+      </p>
+    </div>
+
+    <div class="method-card">
+      <div class="method-icon">🌐</div>
+      <h3>Penyajian Web</h3>
+      <p>
+        Peta ditampilkan dalam website agar pengguna dapat mengeksplorasi
+        persebaran dan karakteristik objek wisata secara visual.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section id="map-section">
   <iframe src="peta_folium.html"></iframe>
 </section>
 
+<footer class="footer">
+  <div class="footer-content">
+    <small>
+      © 2025 | Zafirah Hasna A • Salma Aulia M • Yasmin Pia  
+      <br>UAS PROPAS
+    </small>
+  </div>
+</footer>
 
-<!-- FOOTER -->
-<div class="footer">
- UAS PROPAS 2025 (Afla, Salma, Yasmin)
-</div>
-
-<!-- ================= JAVASCRIPT SLIDER ================= -->
 <script>
-let slides = document.querySelectorAll(".slide");
+/* ===== HERO SLIDER ===== */
+let slides = document.querySelectorAll('.slide');
 let index = 0;
 
 setInterval(() => {
-  slides[index].classList.remove("active");
+  slides[index].classList.remove('active');
   index = (index + 1) % slides.length;
-  slides[index].classList.add("active");
+  slides[index].classList.add('active');
 }, 4000);
+
+/* ===== ANIMATED STATISTICS ===== */
+const counters = document.querySelectorAll('.stat-number');
+let statsPlayed = false;
+
+function runCounters() {
+  if (statsPlayed) return;
+
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    let current = 0;
+    const speed = 60;
+
+    const update = () => {
+      current += target / speed;
+      if (current < target) {
+        counter.innerText = Math.ceil(current);
+        requestAnimationFrame(update);
+      } else {
+        counter.innerText = target + "+";
+      }
+    };
+    update();
+  });
+
+  statsPlayed = true;
+}
+
+window.addEventListener('scroll', () => {
+  const statsSection = document.querySelector('.stats');
+  const top = statsSection.getBoundingClientRect().top;
+  const windowHeight = window.innerHeight;
+
+  if (top < windowHeight - 120) {
+    runCounters();
+  }
+});
+</script>
+
+<script>
+window.addEventListener("scroll", function () {
+  const navbar = document.querySelector(".navbar");
+  navbar.classList.toggle("scrolled", window.scrollY > 50);
+});
+</script>
+<script>
+window.addEventListener("scroll", () => {
+  const navbar = document.querySelector(".navbar");
+  const heroHeight = document.querySelector(".hero").offsetHeight;
+
+  if (window.scrollY > heroHeight - 80) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
 </script>
 
 </body>
 </html>
-
-
